@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>YelpOpenTime</Name>
+      <ViewSelectedBy>
+        <TypeName>Yelp.OpenTime</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Day</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Opens</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Closes</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>DayOfWeek</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Opens</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Closes</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

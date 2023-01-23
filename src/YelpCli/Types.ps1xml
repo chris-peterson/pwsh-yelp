@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+  <Type>
+    <Name>Yelp.OpenTime</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>DayOfWeek</Name>
+        <GetScriptBlock>
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Opens</Name>
+        <GetScriptBlock>
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Closes</Name>
+        <GetScriptBlock>
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+</Types>
