@@ -31,7 +31,7 @@
         'Get-YelpHours'
 
         # Utilities
-        'New-YelpCliObject'
+        'New-YelpObject'
     )
     AliasesToExport = @(
     )

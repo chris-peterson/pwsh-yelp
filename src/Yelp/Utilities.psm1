@@ -1,4 +1,4 @@
-function New-YelpCliObject {
+function New-YelpObject {
     [CmdletBinding()]
     param(
         [Parameter(ValueFromPipeline)]
