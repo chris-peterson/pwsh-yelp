@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Types>
   <Type>
+    <Name>Yelp.Business</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>Address</Name>
+        <GetScriptBlock>
+        $this.Location.display_address
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+  <Type>
     <Name>Yelp.OpenTime</Name>
     <Members>
       <ScriptProperty>
         <Name>DayOfWeek</Name>
         <GetScriptBlock>
+        @('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')[$this.Day]
         </GetScriptBlock>
       </ScriptProperty>
       <ScriptProperty>
         <Name>Opens</Name>
         <GetScriptBlock>
+        $StartHour = [byte] $this.Start.Substring(0,2)
+        $AmOrPm = $StartHour -gt 12 ? 'PM' : 'AM'
+        if ($StartHour -gt 12) {
+          $StartHour -= 12
+        }
+        "$StartHour $AmOrPm"
         </GetScriptBlock>
       </ScriptProperty>
       <ScriptProperty>
         <Name>Closes</Name>
         <GetScriptBlock>
+        $EndHour = [byte] $this.End.Substring(0,2)
+        $AmOrPm = $EndHour -gt 12 ? 'PM' : 'AM'
+        if ($EndHour -gt 12) {
+          $EndHour -= 12
+        }
+        "$EndHour $AmOrPm"
         </GetScriptBlock>
       </ScriptProperty>
     </Members>

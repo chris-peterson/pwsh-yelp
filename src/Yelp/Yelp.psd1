@@ -24,14 +24,23 @@
 
     NestedModules = @(
         'Business.psm1',
+        'Config.psm1'
         'Utilities.psm1'
     )
     FunctionsToExport = @(
         # Business
-        'Get-YelpHours'
+        'Search-YelpBusiness'
+        'Get-YelpBusiness'
+        'Get-YelpBusinessHours'
+
+        # Configuration
+        'Get-YelpLocation'
+        'Set-YelpLocation'
 
         # Utilities
+        'Invoke-YelpApi'
         'New-YelpObject'
+        'Get-FilteredYelpObject'
     )
     AliasesToExport = @(
     )
