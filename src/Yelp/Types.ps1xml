@@ -6,7 +6,8 @@
       <ScriptProperty>
         <Name>Address</Name>
         <GetScriptBlock>
-        $this.Location.display_address
+        $l = $this.Location
+        "$($l.address1) | $($l.city), $($l.state) $($l.zip_code)"
         </GetScriptBlock>
       </ScriptProperty>
     </Members>

@@ -34,7 +34,7 @@ function Invoke-YelpApi {
 
     $Uri = "https://api.yelp.com/v3/$Resource$SerializedQuery"
 
-    if ($PSCmdlet.ShouldProcess($Resource, "$Method")) {
+    if ($PSCmdlet.ShouldProcess("$Resource$SerializedQuery", "$Method")) {
         Invoke-RestMethod -Headers @{ 'Authorization' = "Bearer $env:YELP_API_SECRET" } `
             -Method $Method -Uri $Uri -Body $Body
     }

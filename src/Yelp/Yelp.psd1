@@ -1,11 +1,11 @@
 @{
-    ModuleVersion = '0.0.2'
+    ModuleVersion = '0.0.3'
 
     PrivateData = @{
         PSData = @{
             LicenseUri = 'https://github.com/chris-peterson/pwsh-yelp/blob/main/LICENSE'
             ProjectUri = 'https://github.com/chris-peterson/pwsh-yelp'
-            ReleaseNotes = 'initial revision'
+            ReleaseNotes = 'basic search functionality'
         }
     }
 

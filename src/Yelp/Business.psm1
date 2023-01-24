@@ -1,15 +1,53 @@
 function Search-YelpBusiness {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)]
+        [Parameter()]
+        [string]
+        $Term,
+
+        [Parameter()]
         [string []]
-        $Categories
+        $Categories = @(),
+
+        [Parameter()]
+        [ValidateSet('$', '$$', '$$$', '$$$$')]
+        [string]
+        $PriceLevel,
+
+        [Parameter()]
+        [switch]
+        $OpenNow,
+
+        [Parameter()]
+        [DateTime]
+        $OpenAt
     )
 
-    Invoke-YelpApi GET 'businesses/search' -Query @{
-        location = Get-YelpLocation
+    $Query = @{
+        location   = Get-YelpLocation
         categories = $Categories -join ','
-    } | Select-Object -ExpandProperty businesses | New-YelpObject 'Yelp.Business'
+        term       = $Term
+    }
+    if ($PriceLevel) {
+        $PriceLevels = @()
+        $NumDollars = $PriceLevel.Length
+        for ($i = 1; $i -le $NumDollars; $i++) {
+            $PriceLevels += $i
+        }
+        $Query.price = $PriceLevels -join ','
+    }
+    if ($OpenNow) {
+        $Query.open_now = 'true'
+    }
+    elseif ($OpenAt) {
+        $UnixEpoch = Get-Date '1970-01-01'
+        $Timestamp = [Math]::Round($($OpenAt - $UnixEpoch).TotalSeconds)
+        $Query.open_at = $Timestamp
+    }
+
+    Invoke-YelpApi GET 'businesses/search' -Query $Query |
+        Select-Object -ExpandProperty businesses |
+        New-YelpObject 'Yelp.Business'
 }
 
 function Get-YelpBusiness {
