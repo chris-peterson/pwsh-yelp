@@ -101,3 +101,39 @@ function New-YelpObject {
         }
     }
 }
+
+# adapted from https://4sysops.com/archives/format-time-and-date-output-of-powershell-new-timespan
+function Get-TimeSpanPretty {
+    [CmdletBinding()]
+    Param
+    (
+        [Parameter(Mandatory, ValueFromPipeline)]
+        [ValidateNotNull()]
+        [timespan]
+        $TimeSpan
+    )
+
+    Begin {}
+    Process {
+        $TimeSpanPretty = ''
+        $Ts = [ordered]@{
+            Weeks   = [math]::Floor($TimeSpan.Days / 7)
+            Days    = [int]$TimeSpan.Days % 7
+            Hours   = [int]$TimeSpan.Hours
+            Minutes = [int]$TimeSpan.Minutes
+        }
+        foreach ($i in $Ts.Keys){
+            if ($Ts.$i -ne 0) {
+                $TimeSpanPretty += "{0} {1}, " -f $Ts.$i,$i
+            }
+        }
+        if ($TimeSpanPretty.Length -ne 0){
+            $TimeSpanPretty = $TimeSpanPretty.Substring(0,$TimeSpanPretty.Length-2)
+        }
+        else {
+            $TimeSpanPretty = "Less than a second"
+        }
+        $TimeSpanPretty
+    }
+    End {}
+}

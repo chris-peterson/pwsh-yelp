@@ -17,6 +17,12 @@
           <TableColumnHeader>
             <Label>Address</Label>
           </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Open Now?</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Closes In</Label>
+          </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
           <TableRowEntry>
@@ -29,6 +35,12 @@
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Address</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>IsOpenNow</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ClosesIn</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

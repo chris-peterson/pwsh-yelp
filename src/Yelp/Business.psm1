@@ -20,7 +20,11 @@ function Search-YelpBusiness {
 
         [Parameter()]
         [DateTime]
-        $OpenAt
+        $OpenAt,
+
+        [switch]
+        [Parameter()]
+        $Enrich
     )
 
     $Query = @{
@@ -45,15 +49,22 @@ function Search-YelpBusiness {
         $Query.open_at = $Timestamp
     }
 
-    Invoke-YelpApi GET 'businesses/search' -Query $Query |
-        Select-Object -ExpandProperty businesses |
-        New-YelpObject 'Yelp.Business'
+    $Result = Invoke-YelpApi GET 'businesses/search' -Query $Query |
+        Select-Object -ExpandProperty businesses
+
+    if ($Enrich) {
+        $Result | ForEach-Object {
+            Get-YelpBusiness $_.id
+        }
+    } else {
+        $Result | New-YelpObject 'Yelp.Business'
+    }
 }
 
 function Get-YelpBusiness {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [string]
         $Id,
 

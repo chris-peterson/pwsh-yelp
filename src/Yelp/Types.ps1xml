@@ -6,8 +6,25 @@
       <ScriptProperty>
         <Name>Address</Name>
         <GetScriptBlock>
-        $l = $this.Location
-        "$($l.address1) | $($l.city), $($l.state) $($l.zip_code)"
+          $l = $this.Location
+          "$($l.address1) | $($l.city), $($l.state) $($l.zip_code)"
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>IsOpenNow</Name>
+        <GetScriptBlock>
+          $this.Hours.is_open_now
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>ClosesIn</Name>
+        <GetScriptBlock>
+          if ($this.IsOpenNow) {
+            $ClosesHour = $this.OpenTime | Where-Object IsToday | Select-Object -Expand ClosesHour
+            [DateTime]::Today.AddHours($ClosesHour) - [DateTime]::Now | Get-TimeSpanPretty
+          } else {
+            'N/A'
+          }
         </GetScriptBlock>
       </ScriptProperty>
     </Members>
@@ -18,29 +35,47 @@
       <ScriptProperty>
         <Name>DayOfWeek</Name>
         <GetScriptBlock>
-        @('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')[$this.Day]
+          @('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')[$this.Day]
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>IsToday</Name>
+        <GetScriptBlock>
+          $this.DayOfWeek -eq [DateTime]::Now.DayOfWeek
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>OpensHour</Name>
+        <GetScriptBlock>
+          [byte] $this.Start.Substring(0,2)
         </GetScriptBlock>
       </ScriptProperty>
       <ScriptProperty>
         <Name>Opens</Name>
         <GetScriptBlock>
-        $StartHour = [byte] $this.Start.Substring(0,2)
-        $AmOrPm = $StartHour -gt 12 ? 'PM' : 'AM'
-        if ($StartHour -gt 12) {
-          $StartHour -= 12
-        }
-        "$StartHour $AmOrPm"
+          $OpensHour = $this.OpensHour
+          $AmOrPm = $OpensHour -ge 12 ? 'PM' : 'AM'
+          if ($OpensHour -gt 12) {
+            $OpensHour -= 12
+          }
+          "$OpensHour $AmOrPm"
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>ClosesHour</Name>
+        <GetScriptBlock>
+          [byte] $this.End.Substring(0,2)
         </GetScriptBlock>
       </ScriptProperty>
       <ScriptProperty>
         <Name>Closes</Name>
         <GetScriptBlock>
-        $EndHour = [byte] $this.End.Substring(0,2)
-        $AmOrPm = $EndHour -gt 12 ? 'PM' : 'AM'
-        if ($EndHour -gt 12) {
-          $EndHour -= 12
+        $ClosesHour = $this.ClosesHour
+        $AmOrPm = $ClosesHour -ge 12 ? 'PM' : 'AM'
+        if ($ClosesHour -gt 12) {
+          $ClosesHour -= 12
         }
-        "$EndHour $AmOrPm"
+        "$ClosesHour $AmOrPm"
         </GetScriptBlock>
       </ScriptProperty>
     </Members>
